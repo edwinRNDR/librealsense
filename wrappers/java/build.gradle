@@ -61,7 +61,7 @@ model {
 
                 if (targetPlatform.operatingSystem.macOsX) {
                     cppCompiler.args "-I${project.projectDir}/../../include"
-                    linker.args "${project.projectDir}/../../build/Debug/librealsense2.dylib"
+                    linker.args "${project.projectDir}/../../librealsense2.dylib"
                 }
 
                 if (targetPlatform.operatingSystem.windows) {
