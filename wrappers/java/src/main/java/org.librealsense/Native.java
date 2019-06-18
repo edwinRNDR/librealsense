@@ -30,6 +30,11 @@ public class Native {
     static void loadLibrary(String resource, String target) {
         InputStream stream = Native.class.getResourceAsStream(resource);
 
+        if (stream == null) {
+            System.out.println("could not load resource: " + resource);
+        }
+
+
         try {
             File tmpDir = new File(System.getProperty("java.io.tmpdir"));
             File jinectDir = new File(tmpDir, "librealsense-jvm");
@@ -39,6 +44,9 @@ public class Native {
 
             if (true || !jinectLib.exists()) {
                 OutputStream out = new FileOutputStream(jinectLib);
+
+
+
                 byte[] buffer = new byte[1024];
                 int len;
                 while ((len = stream.read(buffer)) != -1) {

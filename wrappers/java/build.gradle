@@ -12,9 +12,22 @@ plugins {
     id 'org.bven.jniplugin' version '0.0.5'
 }
 
+switch (org.gradle.internal.os.OperatingSystem.current()) {
+    case org.gradle.internal.os.OperatingSystem.WINDOWS:
+        ext.platform = "windows"
+        break
+    case org.gradle.internal.os.OperatingSystem.LINUX:
+        ext.platform = "linux-x64"
+        break
+    case org.gradle.internal.os.OperatingSystem.MAC_OS:
+        ext.platform = "macos"
+        break
+}
+
 
 version = '2.12.0-0'
 group = 'org.librealsense'
+
 
 // Process resources task doesn't get created if there aren't any resources; create a placeholder to ensure that it does.
 def placeholder = file('src/main/resources/deleteme')
@@ -107,8 +120,10 @@ model {
         publications {
             impl(MavenPublication) {
                 groupId 'org.librealsense'
-                artifactId 'realsense-jvm'
-                artifact $.tasks.createMainJar
+                artifactId "realsense-jvm"
+
+                artifact source: $.tasks.createMainJar, classifier: "$platform"
+
             }
         }
     }
